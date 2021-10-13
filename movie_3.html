@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Rated Movies</title>
+    <style>
+      #movies {
+        display: flex;
+        overflow: scroll;
+      }
+      img {
+        width: 500px;
+        height: 500px;
+        margin-left: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Popular Movies</h1>
+    <div id="movies"></div>
+
+    <script>
+      const API_KEY = "api_key=1cf50e6248dc270629e802686245c2c8";
+      const BASE_URL = "https://api.themoviedb.org/3";
+      const API_URL =
+        BASE_URL + "/discover/movie?sort_by=popularity.desc&" + API_KEY;
+      const IMG_URL = "https://image.tmdb.org/t/p/w500";
+      const searchURL = BASE_URL + "/search/movie?" + API_KEY;
+
+      async function movies() {
+        let res = await fetch(API_URL);
+        let data = await res.json();
+        showmovies(data);
+      }
+      movies();
+
+      function showmovies(movies) {
+        let div = document.getElementById("movies");
+
+        movies.results.forEach((movie) => {
+          console.log(movie.poster_path);
+
+          let img = document.createElement("img");
+          img.src = IMG_URL + movie.poster_path;
+
+          div.append(img);
+        });
+      }
+    </script>
+  </body>
+</html>

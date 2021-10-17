@@ -99,6 +99,31 @@
       );
       let data = await res.json();
       appendvideos(data.items);
+
+     
+    }
+
+    async function showvid(){
+      let res2 = await fetch(
+        `https://youtube.googleapis.com/youtube/v3/search?q=query&type=video&key=AIzaSyD4PeJVEXKRvWWakerD_Nt-rg3e_6n10mc&maxResults=20`
+      );
+      let data2 = await res2.json();
+      showmovies(data2.items)
+    }
+    showvid()
+
+    showmovies = (vid)=>{
+      vid.forEach(({ id: { videoId } }) => {
+        let div = document.createElement("div");
+
+        //embed youtube videos on web app
+
+        div.innerHTML = `<iframe width="360" height="215" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        videos.append(div);
+      });
+     
+
+
     }
 
     appendvideos = (video_data) => {

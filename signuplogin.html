@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Signup</title>
+</head>
+<body>
+    <form id="signup" onsubmit="signup(event)">
+        <h1>signup</h1>
+        name
+        <input type="text" id="name" /><br /><br />
+        email
+        <input type="text" id="email" /><br /><br />
+        password
+        <input type="text" id="password" /><br /><br />
+        username
+        <input type="text" id="username" /><br /><br />
+        mobile
+        <input type="number" id="mobile" /><br /><br />
+        description
+        <input type="text" id="description" /><br /><br />
+        <input type="submit" />
+      </form>
+      <form onsubmit="login(event)" id="login">
+        username<input type="text" id="user" /> password<input
+          type="text"
+          id="pass"
+        />
+        <input type="submit" />
+      </form>
+</body>
+<script>
+    
+    async function signup(event) {
+        event.preventDefault();
+        let form = document.getElementById("signup");
+
+        let user_data = {
+          name: form.name.value,
+          email: form.email.value,
+          password: form.password.value,
+          username: form.username.value,
+          mobile: form.mobile.value,
+          description: form.description.value,
+        };
+        user_data = JSON.stringify(user_data);
+
+        let res = await fetch(
+          `https://masai-api-mocker.herokuapp.com/auth/register`,
+          {
+            method: `POST`,
+
+            body: user_data,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        let data = await res.json();
+        console.log(data);
+      }
+
+      async function login(event) {
+        event.preventDefault();
+        let form1 = document.getElementById("login");
+
+        let user_data = {
+          password: form1.pass.value,
+          username: form1.user.value,
+        };
+        let datasend = JSON.stringify(user_data);
+
+        let res = await fetch(
+          `https://masai-api-mocker.herokuapp.com/auth/login`,
+          {
+            method: `POST`,
+
+            body: datasend,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        let data = await res.json();
+        fetchdata(user_data.username, data.token);
+
+      }
+
+      var flag = false;
+      async function fetchdata(username, token) {
+        let res = await fetch(
+          `https://masai-api-mocker.herokuapp.com/user/${username}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        let data = await res.json();
+        flag= true;
+        console.log(data);
+
+        if(flag){
+            window.location.href="mytube.html"
+        }else{
+            flag = false;
+        }
+      }
+
+      //  spelling-- check the key value pair of the data that you are posting
+
+      // check the url
+
+      //body must be a stringified data
+</script>
+</html>

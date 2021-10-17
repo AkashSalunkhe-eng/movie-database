@@ -91,6 +91,9 @@
     // my api - AIzaSyD4PeJVEXKRvWWakerD_Nt-rg3e_6n10mc
     //AIzaSyATRCI9I_bqsInXtVMgDnWwNwf__XTYHX4
 
+
+    //clearTimeout(timeout)
+    
     let videos = document.getElementById("videos");
     async function searchvideos() {
       let query = document.getElementById("query").value;
@@ -137,5 +140,28 @@
         videos.append(div);
       });
     };
+
+    
+
+    let timeout = setTimeout(() => {
+      flag= true
+      clear()
+      
+    }, 10000);
+
+    function clear() {
+     
+      window.location.href="signuplogin.html"
+
+    }
+    
+   
+
+    
+  
+    
+
+    
+    
   </script>
 </html>
